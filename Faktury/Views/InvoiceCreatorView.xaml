@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="Faktury.Views.InvoiceCreatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Faktury.Views"
+             xmlns:vm="clr-namespace:Faktury.ViewModels"   
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Górna sekcja z przyciskiem Cancel i tytułem -->
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Przycisk Cancel -->
+            <Button Content="Cancel"
+                    Command="{Binding CancelInvoiceCommand}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Margin="10,0" />
+
+            <!-- Tytuł -->
+            <TextBlock Grid.Column="1"
+                       Text="Invoice Maker Page" 
+                       FontSize="34" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,25,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- Pole do wpisania numeru faktury (na górze) -->
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20,0,10,0">
+                <Label Content="Invoice Number" VerticalAlignment="Center" />
+                <TextBox Width="100" 
+                 Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" 
+                 HorizontalAlignment="Left" 
+                 Margin="10,0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20,0,0,0">
+                <Label Content="Purchaser" VerticalAlignment="Center" />
+                <ComboBox x:Name="CompanySearchBox"
+                          Height="20"
+                          Width="200"
+                          HorizontalAlignment="Left"
+                          Margin="10"
+                          ItemsSource="{Binding UserCompanies}" 
+                          DisplayMemberPath="CompanyName" 
+                          SelectedItem="{Binding SelectedCompany}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,208,0" HorizontalAlignment="Left" >
+                <Label Content="{Binding SelectedCompany.Name}" Padding="0"/>
+                <Label Content="{Binding SelectedCompany.Address}" Padding="0" />
+                <Label Content="{Binding SelectedCompany.Nip}" ContentStringFormat="NIP: {0}" Padding="0"  />
+                <Label Content="{Binding SelectedCompany.Regon}" ContentStringFormat="REGON: {0}" Padding="0" />
+            </StackPanel>
+        </Grid>
+
+
+
+
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <!-- Lewa strona -->
+                <ColumnDefinition Width="*" />
+                <!-- Środek, pusty -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Prawa strona -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Lewy DatePicker -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="20">
+                <Label Content="Issue Date" VerticalAlignment="Center"/>
+                <DatePicker x:Name="NDateOfIssue" Height="20" Width="200" HorizontalAlignment="Left" Margin="10" SelectedDate="{Binding IssueDate}"/>
+            </StackPanel>
+
+            <!-- Prawy DatePicker -->
+            <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" Margin="20">
+                <Label Content="Invoice Date" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <DatePicker x:Name="NDateOfInvoice" Height="20" Width="200" HorizontalAlignment="Right" Margin="10" SelectedDate="{Binding InvoiceDate}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="10">
+            <TextBlock Text="Add Invoice Item" FontSize="20" Margin="0,10,0,5" />
+            <Label Content="Name" />
+            <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,10" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"
+                     HorizontalAlignment="Stretch"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Quantity" />
+                <TextBox Width="50" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+                <Label Content="Unit Net Price" />
+                <TextBox Width="80" Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+                <Label Content="Unit of measure" />
+                <TextBox Width="50" Text="{Binding UnitOfMeasure, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+                <Label Content="Tax Rate" />
+                <TextBox Width="50" Text="{Binding TaxRate, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+                <Button Content="Add Item" Width="100" HorizontalAlignment="Right" Command="{Binding AddProductCommand}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ListView
+            Grid.Row="4"
+            Margin="10"
+            ItemsSource="{Binding Products}"
+            Width="Auto"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch">    
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                   
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <!-- Kolumna "Name" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Quantity" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Unit Net Price" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Unit Net Price" DisplayMemberBinding="{Binding NetUnitPrice}">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Tax Rate" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Tax Rate" DisplayMemberBinding="{Binding TaxRate}">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Tax Amount" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Tax Amount" DisplayMemberBinding="{Binding TaxAmount}">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Net Amount" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Net Amount" DisplayMemberBinding="{Binding NetAmount}">
+                    </GridViewColumn>
+
+                    <!-- Kolumna "Total Price" rozciąga się na dostępne miejsce -->
+                    <GridViewColumn Header="Total Price" DisplayMemberBinding="{Binding TotalPrice}">
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+        <Button Grid.Row="5" Height="auto" HorizontalAlignment="Center"
+                 Background="Blue" Content="Send" FontSize="24" Command="{Binding AddInvoiceCommand}"/>
+    </Grid>
+</UserControl>

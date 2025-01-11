@@ -17,11 +17,14 @@ namespace Faktury.ViewModels
     {
         public ObservableCollection<InvoiceViewModel> Invoices {  get; set; }
 
-        public ICommand SetMyCompanyCommand { get; }
+        public ICommand SetOwnCompanyCommand { get; }
         public ICommand AddContractorCommand { get; }
         public ICommand InvoiceCreatorCommand { get; }
 
-        public InvoiceListViewModel(NavigationService invoiceCreatorNavigationService)
+        public InvoiceListViewModel(
+            NavigationService invoiceCreatorNavigationService, 
+            NavigationService addContractorNavigationService,
+            NavigationService setOwnCompanyNavigationService)
         {
             // Sample data for testing
             var vendor = new Company { Name = "Vendor Company", Address = "123 Main St", Nip = "1234567890", Regon = "0987654321" };
@@ -44,7 +47,8 @@ namespace Faktury.ViewModels
             };
 
             InvoiceCreatorCommand = new NavigateCommand(invoiceCreatorNavigationService);
-           
+            AddContractorCommand = new NavigateCommand(addContractorNavigationService);
+            SetOwnCompanyCommand = new NavigateCommand(setOwnCompanyNavigationService);
         }
 
     }

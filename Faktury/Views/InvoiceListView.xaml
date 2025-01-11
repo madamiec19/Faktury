@@ -17,9 +17,9 @@
 
         <!-- Buttons Section -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10" HorizontalAlignment="Stretch">
-            <Button Content="Set My Company" Command="{Binding SetMyCompanyCommand}" 
+            <Button Content="Set My Company" Command="{Binding SetOwnCompanyCommand}" 
                     HorizontalAlignment="Center" Margin="10,0" />
-            <Button Content="Add Contractors" Command="{Binding AddContractorsCommand}" 
+            <Button Content="Add Contractors" Command="{Binding AddContractorCommand}" 
                     HorizontalAlignment="Center" Margin="10,0" />
             <Button Content="Add Invoice" Command="{Binding InvoiceCreatorCommand}" 
                     HorizontalAlignment="Center" Margin="10,0" />

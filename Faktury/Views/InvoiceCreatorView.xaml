@@ -21,14 +21,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Górna sekcja z przyciskiem Cancel i tytułem -->
         <Grid Grid.Row="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Przycisk Cancel -->
             <Button Content="Cancel"
                     Command="{Binding CancelInvoiceCommand}"
                     HorizontalAlignment="Left"
@@ -36,7 +34,6 @@
                     Width="100"
                     Margin="10,0" />
 
-            <!-- Tytuł -->
             <TextBlock Grid.Column="1"
                        Text="Invoice Maker Page" 
                        FontSize="34" 

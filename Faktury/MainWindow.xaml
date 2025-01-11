@@ -19,6 +19,12 @@
             <DataTemplate DataType="{x:Type vm:InvoiceDetailsViewModel}">
                 <views:InvoiceDetailsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AddContractorViewModel}">
+                <views:AddContractorView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SetOwnCompanyViewModel}">
+                <views:SetOwnCompanyView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl Content="{Binding CurrentViewModel}"/>

@@ -39,7 +39,18 @@ namespace Faktury
 
         private InvoiceListViewModel CreateInvoiceListViewModel()
         {
-            return new InvoiceListViewModel(new NavigationService( _navigationStore, CreateInvoiceCreatorViewModel));
+            return new InvoiceListViewModel(
+                new NavigationService( _navigationStore, CreateInvoiceCreatorViewModel), 
+                new NavigationService(_navigationStore, CreateAddContractorViewModel),
+                new NavigationService(_navigationStore, CreateSetOwnCompanyViewModel));
+        }
+        private AddContractorViewModel CreateAddContractorViewModel()
+        {
+            return new AddContractorViewModel(new NavigationService(_navigationStore, CreateInvoiceListViewModel));
+        }
+        private SetOwnCompanyViewModel CreateSetOwnCompanyViewModel()
+        {
+            return new SetOwnCompanyViewModel(new NavigationService(_navigationStore, CreateInvoiceListViewModel));
         }
     }
 

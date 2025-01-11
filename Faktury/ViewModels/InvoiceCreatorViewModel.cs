@@ -162,8 +162,8 @@ namespace Faktury.ViewModels
                 new Product { Id = 2, Name = "Product B", Quantity = 1, NetUnitPrice = 100, TaxRate = 23 }
             };
             SelectedCompany = new Company { Id = 2, Name = "Company sp. z o.o.", Address = "ul. Nowa 9 \n05-430 Radom", Nip = "2343453452", Regon = "432423524" };
-            
-            
+
+
             CancelInvoiceCommand = new NavigateCommand(invoiceListNavigationService);
         }
     }
